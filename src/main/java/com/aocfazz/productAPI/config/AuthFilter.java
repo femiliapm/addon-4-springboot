@@ -17,8 +17,10 @@ public class AuthFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
     request.getHeader("Authorization");
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'doFilterInternal'");
+    filterChain.doFilter(request, response);
+    // // TODO Auto-generated method stub
+    // 
+    // throw new UnsupportedOperationException("Unimplemented method 'doFilterInternal'");
   }
 
 }
