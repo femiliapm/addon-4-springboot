@@ -6,7 +6,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -16,39 +15,29 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "transactions")
 @Data
 @NoArgsConstructor
-public class Order {
+public class Transaction {
   @Id
   @UuidGenerator
-  // @GeneratedValue(strategy = GenerationType.IDENTITY)
   private String id;
-
-  @ManyToOne
-  @JoinColumn(name = "transaction_id")
-  private Transaction transaction;
-
-  @ManyToOne
-  @JoinColumn(name = "product_id")
-  private Product product;
-
-  @Column(nullable = false)
-  private Integer quantity;
-
-  @Column(nullable = false)
-  private Double totalPrice;
 
   @CreationTimestamp
   private LocalDateTime createdAt;
+  private Double totalAmount = 0.;
+  private String status;
+
+  @ManyToOne
+  @JoinColumn(name = "customer_id")
+  private Customer customer;
 
   @UpdateTimestamp
   private LocalDateTime updatedAt;
   private Boolean isDeleted = false;
 
-  public Order(Product product, Integer quantity, Double totalPrice) {
-    this.product = product;
-    this.quantity = quantity;
-    this.totalPrice = totalPrice;
+  public Transaction(String status, Customer customer) {
+    this.status = status;
+    this.customer = customer;
   }
 }

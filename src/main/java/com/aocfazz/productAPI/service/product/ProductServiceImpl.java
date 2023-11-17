@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.aocfazz.productAPI.model.Product;
 import com.aocfazz.productAPI.payload.req.ProductReq;
+import com.aocfazz.productAPI.payload.res.ProductRes;
 import com.aocfazz.productAPI.payload.res.ResponseHandler;
 import com.aocfazz.productAPI.repository.ProductRepository;
 
@@ -110,13 +111,15 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public ResponseEntity<?> getProductsService(Boolean isDeleted) {
     List<Product> product;
+    List<ProductRes> productRes = null;
     if (isDeleted == null) {
-      product = productRepository.findAll();
+      // product = productRepository.findAll();
+      productRes = productRepository.findSelectedData();
     } else {
       product = productRepository.findByStatus(isDeleted);
     }
 
-    return ResponseHandler.response(200, "success", product, null, true);
+    return ResponseHandler.response(200, "success", productRes, null, true);
   }
 
 }
